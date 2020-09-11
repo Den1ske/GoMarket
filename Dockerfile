@@ -5,8 +5,8 @@ RUN apk update && apk upgrade && \
 
 WORKDIR /app
 
-COPY ./app .
-COPY ./app/go.mod ./app/go.sum ./
+COPY ./ .
+COPY ./go.mod ./go.sum ./
 RUN go mod download
 
 RUN go build -o main .
