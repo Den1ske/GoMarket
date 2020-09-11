@@ -11,9 +11,9 @@ RUN go mod download
 
 RUN go build -o main .
 
-#RUN export PATH=$PATH:$GOPATH/bin
+RUN export PATH=$PATH:$HOME/bin/
 
-#RUN reflex -r '\.go$' -s -- sh -c "go build -o main ."
+RUN reflex -r '\.go$' -s -- sh -c "go build -o main ."
 
 EXPOSE 8080
 
