@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - backend
+  db:
+    image: mysql:5.7
+    restart: always
+    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+    volumes:
+      - './data/mysql:/var/lib/mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: go_market
+      MYSQL_USER: go_market
+      MYSQL_PASSWORD: go_market
+    networks:
+      - backend
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+networks:
+  backend:
