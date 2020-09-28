@@ -1,0 +1,4 @@
+CREATE TABLE product_categories (
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255)
+);

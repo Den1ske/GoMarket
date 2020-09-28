@@ -1,0 +1,6 @@
+server_port = ":80"
+log_level = "debug"
+
+[store]
+
+database_url = "root:root@tcp(db:3306)/go_market"
