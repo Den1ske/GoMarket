@@ -6,6 +6,7 @@ import (
 
 // ProductRepository ...
 type ProductRepository interface {
-	Create(*model.Product) error
+	List(int) ([] *model.Product, error)
+	Create(*model.Product) (*model.Product, error)
 	FindByID(int64) (*model.Product, error)
 }

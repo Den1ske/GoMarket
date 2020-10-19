@@ -2,6 +2,7 @@ package sqlstore
 
 import (
 	"database/sql"
+	"github.com/Den1ske/GoMarket/src/internal/app/store"
 	_ "github.com/go-sql-driver/mysql" //
 )
 
@@ -19,12 +20,12 @@ func New(db *sql.DB) *Store{
 }
 
 // Product ...
-func (s *Store) Product() *store.ProductRepository {
+func (s *Store) Product() store.ProductRepository {
 
 	if s.productRepository != nil {
 		return s.productRepository
 	}
-
+	
 	s.productRepository = &ProductRepository {
 		store: s,
 	} 

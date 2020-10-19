@@ -3,12 +3,11 @@ version: '3'
 services:
 
   app:
-    build:
-      context: . 
-      dockerfile: Dockerfile
+    build: ./
     ports:
-      - "80:8080"
-    restart: unless-stopped
+      - '80:80'
+    volumes:
+      - ./src:/app
     depends_on:
       - db
     networks:
@@ -19,11 +18,9 @@ services:
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
     volumes:
       - './data/mysql:/var/lib/mysql'
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: go_market
-      MYSQL_USER: go_market
-      MYSQL_PASSWORD: go_market
+      - ./init/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
     networks:
       - backend
   adminer:

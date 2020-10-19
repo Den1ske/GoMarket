@@ -1,18 +1,19 @@
 package apiserver
 
 import (
-	"io"
+	"database/sql"
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
-	"github.com/Den1ske/GoMarket/src/internal/app/store"
+	"github.com/Den1ske/GoMarket/src/internal/app/store/sqlstore"
+	"github.com/Den1ske/GoMarket/src/internal/app/controller"
 )
 
 type APIServer struct{
 	config *Config
 	logger *logrus.Logger
 	router *mux.Router
-	store *store.Store
+	store *sqlstore.Store
 }
 
 func New(config *Config) *APIServer {
@@ -50,21 +51,16 @@ func (s *APIServer) configureLogger() error  {
 }
 
 func (s *APIServer) configureRouter() {
-	s.router.HandleFunc("/product", s.handleProduct())
+	s.router.HandleFunc("/products", controller.ListProducts())
 }
 
 func (s *APIServer) configureStore() error {
-	st := store.New(s.config.Store)
-	if err := st.Open(); err != nil {
+
+	db, err := sql.Open("mysql", s.config.DatabaseURL)
+	if err != nil {
 		return err
 	}
-	s.store = st
+	s.store = sqlstore.New(db)
 
 	return nil
-}
-
-func (s *APIServer) handleProduct() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, `Hello`)
-	}
 }
