@@ -10,7 +10,7 @@ import (
 func Connect() (*sqlx.DB, error) {
 	db, err := sqlx.Open("mysql", "root:root@tcp(db:3306)/go_market")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 		return nil, err
 	}
 	return db, nil
