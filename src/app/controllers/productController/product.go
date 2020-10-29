@@ -107,7 +107,7 @@ func (pc *productController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if product != nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(product)
 	}
 }

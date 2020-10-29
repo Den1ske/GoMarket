@@ -44,7 +44,7 @@ func (p *productRepository) GetByArticle(article string) (*entity.Product, error
 
 	product := entity.Product{}
 
-	var err = p.store.db.Get(&product, "SELECT * FROM products WHERE article="+article)
+	var err = p.store.db.Get(&product, "SELECT * FROM products WHERE article='"+article+"'")
 	if err != nil {
 		//log.Fatal(err.Error())
 		return nil, err
