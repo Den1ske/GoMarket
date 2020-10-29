@@ -16,11 +16,20 @@ func Routing()  {
 	Router.Use(middleware.RealIP)
 	Router.Use(middleware.Logger)
 	Router.Use(middleware.Recoverer)
+
 	Router.Route("/products", func(r chi.Router) {
 		r.Get("/", controllers.ProductController.List)
 		r.Post("/", controllers.ProductController.Create)
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/", controllers.ProductController.GetByID)
+		})
+	})
+
+	Router.Route("/product_categories", func(r chi.Router) {
+		r.Get("/", controllers.ProductCategoryController.List)
+		r.Post("/", controllers.ProductCategoryController.Create)
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/", controllers.ProductCategoryController.GetByID)
 		})
 	})
 }
