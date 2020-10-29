@@ -5,7 +5,7 @@ services:
   app:
     build: ./
     ports:
-      - '80:80'
+      - '80:8085'
     volumes:
       - ./src:/app
     depends_on:
