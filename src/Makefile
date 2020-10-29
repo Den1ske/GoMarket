@@ -9,5 +9,5 @@ test:
 DATABASE ?= go_market
 ACTION ?= up
 migrate:
-	migrate -path migrations -database "mysql://root:root@tcp(localhost:3306)/$(DATABASE)" $(ACTION)
+	migrate -path migrations -database "mysql://root:root@tcp(db:3306)/$(DATABASE)" $(ACTION)
 .DEFAULT_GOAL := build

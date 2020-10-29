@@ -5,7 +5,7 @@ services:
   app:
     build: ./
     ports:
-      - '80:80'
+      - '80:8085'
     volumes:
       - ./src:/app
     depends_on:
@@ -21,6 +21,8 @@ services:
       - ./init/mysql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
     networks:
       - backend
   adminer:

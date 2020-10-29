@@ -1,35 +1,24 @@
 package main
 
 import (
-	"flag"
+	"github.com/Den1ske/GoMarket/src/app/connection"
+	"github.com/Den1ske/GoMarket/src/app/server"
+
 	"log"
-
-	"github.com/BurntSushi/toml"
-
-	"github.com/Den1ske/GoMarket/src/internal/app/apiserver"
 )
-
-var (
-	configPath string
-)
-
-func init() {
-	flag.StringVar(&configPath, "config-path", "configs/server.toml", "Config file path")
-}
 
 func main() {
-	flag.Parse()
 
-	config := apiserver.NewConfig()
 
-	_, err := toml.DecodeFile(configPath, config)
+	err := server.ServeHTTP()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	s := apiserver.New(config)
-	
-	if err := s.Start(); err != nil {
-		log.Fatal(err)
-	}
+	defer func() {
+		err = connection.CloseDB()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 }
